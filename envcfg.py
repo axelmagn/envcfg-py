@@ -41,9 +41,6 @@ def envcfg(config, env_prefix="ENV:", env_default_sep='='):
     if isinstance(config, list):
         return [envcfg(val) for val in config]
 
-    if isinstance(config, tuple):
-        return (envcfg(val) for val in config)
-
     elif isinstance(config, str):
         if config.startswith(env_prefix):
             # trim off the prefix
@@ -79,5 +76,3 @@ def envcfg(config, env_prefix="ENV:", env_default_sep='='):
     else:
         raise TypeError("Unsupported config type: %s" %
                 type(config).__name__)
-
-
