@@ -1,0 +1,9 @@
+language: python
+python:
+    - "3.2"
+    - "3.3"
+    - "3.4"
+    - "nightly"
+
+install: "pip install -r requirements/test.txt"
+script: nose2 --with-coverage
