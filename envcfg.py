@@ -29,7 +29,7 @@ def envcfg(config, env_prefix="ENV:", env_default_sep='='):
         KeyError: If a value's environment variable is not set, and no default
             is provided.
 
-        ValueError: If config is of an unsupported type.
+        TypeError: If config is of an unsupported type.
 
     """
     # envcfg is a recursive function, so at the top-level it splits logic off
@@ -77,7 +77,7 @@ def envcfg(config, env_prefix="ENV:", env_default_sep='='):
         return config
 
     else:
-        raise ValueError("Unsupported config type: %s" %
+        raise TypeError("Unsupported config type: %s" %
                 type(config).__name__)
 
 
