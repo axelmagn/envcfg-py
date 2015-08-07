@@ -7,6 +7,7 @@ class TestEnvCfg(unittest.TestCase):
     def setUp(self):
         os.environ["WEB_DOMAIN"] = "localhost:5050"
         os.environ["WORKER_PORT"] = "2020"
+        os.environ["CONFIG_MODE"] = "TESTING"
         with open("test_data/config_a.json", 'r') as config_a:
             self.config_a = envcfg(json.load(config_a))
 
@@ -40,6 +41,7 @@ class TestEnvCfg(unittest.TestCase):
         self.assertEqual(self.config_a["hosts"][0]["domain"], "localhost:5050")
         self.assertEqual(
                 self.config_a["hosts"][1]["domain"], "worker.example.com")
+        self.assertEqual(self.config_a["mode"], "TESTING")
 
     def test_env_int(self):
         self.assertIsInstance(self.config_a["hosts"][0]["port"], int)
@@ -52,5 +54,18 @@ class TestEnvCfg(unittest.TestCase):
         self.assertIsInstance(self.config_a["hosts"][1]["load_ratio"], float)
         self.assertEqual(self.config_a["hosts"][0]["load_ratio"], 0.6)
         self.assertEqual(self.config_a["hosts"][1]["load_ratio"], 0.8)
+
+    def test_unsupported_type(self):
+        # sets are unsupported
+        bad_type = set([1, 5, "foo", 5.5])
+        with self.assertRaises(TypeError):
+            config = envcfg(bad_type)
+
+    def test_unset_env(self):
+        del os.environ["CONFIG_MODE"]
+        with self.assertRaises(KeyError):
+            with open("test_data/config_a.json", 'r') as config_a:
+                self.config_a = envcfg(json.load(config_a))
+
 
 
