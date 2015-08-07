@@ -1,0 +1,20 @@
+{
+    "hosts": [
+        {
+            "name": "web",
+            "domain": "ENV:WEB_DOMAIN=www.example.com",
+            "port": "ENV:WEB_PORT=80",
+            "priority": 0.1,
+            "load_ratio": "ENV:WEB_LOAD=0.6"
+        },
+        {
+            "name": "worker",
+            "domain": "ENV:WORKER_DOMAIN=worker.example.com",
+            "port": "ENV:WORKER_PORT=8080",
+            "priority": 0.5,
+            "load_ratio": "ENV:WORKER_LOAD=0.8"
+        }
+    ],
+
+    "n_threads": 8
+}
