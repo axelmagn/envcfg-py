@@ -1,4 +1,4 @@
-EnvCfg
+envcfg
 ======
 
 A lightweight python configuration library that can read configuration
