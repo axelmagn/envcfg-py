@@ -53,4 +53,10 @@ class TestEnvCfg(unittest.TestCase):
         self.assertEqual(self.config_a["hosts"][0]["load_ratio"], 0.6)
         self.assertEqual(self.config_a["hosts"][1]["load_ratio"], 0.8)
 
+    def test_unsupported_type(self):
+        # sets are unsupported
+        bad_type = set([1, 5, "foo", 5.5])
+        with self.assertRaises(TypeError):
+            config = envcfg(bad_type)
+
 
