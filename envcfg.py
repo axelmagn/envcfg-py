@@ -1,9 +1,37 @@
 import os
 
 def envcfg(config, env_prefix="ENV:", env_default_sep='='):
-    """
-    """
+    """Extract environment variables for a configuration object.
 
+    This finds any string in the configuration object that starts with
+    `env_prefix`, and replaces it with the corrseponding environment variable's
+    value in the output.  If the key has a separator matching
+    `env_default_sep`, any string after the separator is interpreted as the
+    default value, to be used if that environment variable is not set.
+
+    If an environment variable's value can be interpreted as an integer or a
+    float, it will be cast to that type in the output.
+
+    Args:
+        config: the configuration object to parse.
+            Can be of any type commonly found in serialized formats: dict,
+            list, tuple, str, int, or float.
+
+        env_prefix (str): The prefix to indicate an environment variable.
+
+        env_default_sep (str): the separator to indicate a default value.
+
+    Returns:
+        A copy of the config object, with any relevant strings translated to
+        environment variables.
+
+    Raises:
+        KeyError: If a value's environment variable is not set, and no default
+            is provided.
+
+        ValueError: If config is of an unsupported type.
+
+    """
     # envcfg is a recursive function, so at the top-level it splits logic off
     # depending on input type
 
